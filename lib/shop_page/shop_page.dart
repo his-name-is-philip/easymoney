@@ -29,7 +29,6 @@ class ShopPage extends StatelessWidget implements Cubited {
                 // pinned: true,
                 // forceMaterialTransparency: true,
                 stretch: true,
-
                 shape: SquircleBorder(
                   radius: BorderRadius.all(Radius.circular(40.0)),
                 ),
