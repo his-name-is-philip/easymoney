@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easymoney/core/domain/shop_repository.dart';
 import 'package:easymoney/shop/domain/shop.dart';
 import 'package:equatable/equatable.dart';
@@ -16,8 +18,9 @@ class ShopListCubit extends Cubit<ShopListState> {
       final shops = await _shopRepository.getShops();
       emit(ShopListSuccess(shops: shops));
     } catch (e) {
-      print(e);
-      emit(ShopListFailed(error: e.toString()));
+      var msg = e.toString();
+      log(msg);
+      emit(ShopListFailed(error: msg));
     }
   }
 }

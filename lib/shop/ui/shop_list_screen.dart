@@ -38,12 +38,15 @@ class ShopListScreen extends StatelessWidget {
   }
 
   Widget _buildShopList(List<Shop> shops) {
-    return ListView.builder(
-      itemCount: shops.length,
-      itemBuilder: (context, index) {
-        final shop = shops[index];
-        return ShopListTile(shop: shop);
-      },
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30),
+      child: ListView.builder(
+        itemCount: shops.length,
+        itemBuilder: (context, index) {
+          final shop = shops[index];
+          return ShopListTile(shop: shop);
+        },
+      ),
     );
   }
 }

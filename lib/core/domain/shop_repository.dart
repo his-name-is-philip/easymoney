@@ -15,6 +15,7 @@ final class MockShopRepository implements ShopRepository {
         description: 'Have forgotten what it is exactly but okay',
         phone: '79985674323',
         email: 'someemail@gmail.com',
+        imagePath: 'assets/images/starbucks_logo.png',
       ),
       Shop(
         name: 'Domino pizza',
@@ -23,6 +24,7 @@ final class MockShopRepository implements ShopRepository {
             'We dont like to make pizza for you but we do like to earn money from you',
         phone: '71233213344',
         email: 'someemail@gmail.com',
+        imagePath: 'assets/images/dishes.jpg',
       ),
     ];
   }

@@ -1,3 +1,4 @@
+//cubits, theme
 import 'package:easymoney/injection.dart';
 import 'package:easymoney/shop/cubit/shop_list_cubit.dart';
 import 'package:easymoney/shop/ui/shop_list_screen.dart';
