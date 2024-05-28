@@ -1,4 +1,5 @@
 final class Shop {
+  final int id;
   final String name;
   final String address;
   final String description;
@@ -13,6 +14,7 @@ final class Shop {
     required this.phone,
     required this.email,
     required this.imagePath,
+    required this.id,
   })  : assert(
           phone == null || RegExp(r'^7[0-9]{10}$').hasMatch(phone),
           'Invalid phone format',

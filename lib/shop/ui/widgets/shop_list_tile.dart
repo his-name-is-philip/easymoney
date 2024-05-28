@@ -13,7 +13,9 @@ class ShopListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () => context.pushPage(context, ShopDetailsScreen(shop: shop)),
+      onTap: () {
+        context.pushPage(context, ShopDetailsScreen(shop));
+      },
       title: Text(shop.name),
       subtitle: Text(shop.address),
     );

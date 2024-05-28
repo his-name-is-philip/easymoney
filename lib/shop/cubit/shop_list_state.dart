@@ -21,4 +21,7 @@ final class ShopListSuccess extends ShopListState {
   final List<Shop> shops;
 
   const ShopListSuccess({required this.shops});
+
+  @override
+  List<Object> get props => [shops];
 }

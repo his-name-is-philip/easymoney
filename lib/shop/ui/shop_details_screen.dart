@@ -1,64 +1,84 @@
+import 'package:easymoney/injection.dart';
+import 'package:easymoney/main.dart';
 import 'package:easymoney/shop/domain/shop.dart';
-import 'package:easymoney/shop/ui/widgets/path_clipper.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:easymoney/shop/ui/widgets/header.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ShopDetailsScreen extends StatelessWidget {
+import '../cubit/shop_details_cubit.dart';
+
+class ShopDetailsScreen extends StatelessWidget implements Cubited {
+  const ShopDetailsScreen(this.shop, {super.key});
+
   final Shop shop;
-
-  const ShopDetailsScreen({
-    super.key,
-    required this.shop,
-  });
 
   @override
   Widget build(BuildContext context) {
-    var screenHeight = MediaQuery.of(context).size.height;
-    var screenWidth = MediaQuery.of(context).size.width;
+    final width = MediaQuery.sizeOf(context).width;
+    final height = MediaQuery.sizeOf(context).height;
+    final theme = Theme.of(context);
+//https://stackoverflow.com/questions/59321479/design-this-animation-using-sliverappbar-flutter/59323713#59323713
     return Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          title: Text(shop.name),
-        ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Stack(
-              alignment: AlignmentDirectional.topCenter,
-              children: [
-                SizedBox(
-                  height: screenHeight / 3,
-                  child: Puddle(height: screenHeight / 3),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                      top: screenHeight / 3 - screenWidth / 5 - 55),
-                  child: Align(
-                    child: _buildCircleImage(screenWidth),
+      body: BlocBuilder<ShopDetailsCubit, ShopDetailsState>(
+          builder: (context, state) {
+        return CustomScrollView(
+          slivers: [
+            DetailsHeader(
+              shop: shop,
+              screenSize: (width, height),
+            ),
+            SliverToBoxAdapter(
+              child: Container(
+                color: Colors.grey,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (shop.phone != null)
+                        ListTile(
+                          title: Text(shop.phone!),
+                          subtitle: const Text('Phone number'),
+                        ),
+                      if (shop.phone != null)
+                        ListTile(
+                          title: Text(shop.email!),
+                          subtitle: const Text('E-mail'),
+                        ),
+                      ListTile(
+                        title: Text(shop.address),
+                        subtitle: const Text('Address'),
+                      ),
+                      Container(
+                        height: MediaQuery.sizeOf(context).height / 4,
+                        color: const Color(0xff666666),
+                        child: const Center(
+                          child: Text('Menu'),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Container(
+                        height: MediaQuery.sizeOf(context).height / 4,
+                        color: const Color(0xff666666),
+                        child: const Center(
+                          child: Text('Map'),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(30),
-              child: Column(
-                children: [
-                  Text(shop.address),
-                  const SizedBox(height: 16),
-                  Text(shop.description),
-                  const SizedBox(height: 16),
-                  if (shop.phone != null) Text(shop.phone!),
-                  if (shop.email != null) Text(shop.email!),
-                ],
               ),
             ),
+            const SliverFillRemaining()
           ],
-        ));
+        );
+      }),
+    );
   }
 
-  Widget _buildCircleImage(double screenWidth) {
+  Widget _buildCircleImage(ShopDetailsState state, double screenWidth) {
     return Stack(
       alignment: AlignmentDirectional.center,
       children: [
@@ -80,6 +100,14 @@ class ShopDetailsScreen extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  @override
+  BlocProvider<ShopDetailsCubit> buildBlocProvider() {
+    return BlocProvider<ShopDetailsCubit>(
+      create: (context) => getIt(param1: shop),
+      child: this,
     );
   }
 }
